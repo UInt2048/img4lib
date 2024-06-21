@@ -17,6 +17,12 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include <Security/SecItem.h>
 #include <Security/SecKey.h>
+#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 100000 && !defined(__IPHONE_10_0)
+SecKeyRef SecKeyCreateWithData(CFDataRef keyData, CFDictionaryRef attributes, CFErrorRef  _Nullable *error);
+typedef CFStringRef SecKeyAlgorithm;
+const SecKeyAlgorithm kSecKeyAlgorithmRSASignatureDigestPKCS1v15SHA1;
+Boolean SecKeyVerifySignature(SecKeyRef key, SecKeyAlgorithm algorithm, CFDataRef signedData, CFDataRef signature, CFErrorRef  _Nullable *error);
+#endif
 #else
 #include <openssl/bn.h>
 #include <openssl/err.h>
